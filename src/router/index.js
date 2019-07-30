@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import AllBooks from '@/views/all-books/all-books.vue'
+import BorrowedBooks from '@/views/borrowed-books/borrowed-books.vue'
 Vue.use(Router)
 
 import Layout from '@/layout'
@@ -9,63 +10,51 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/all-books',
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      path: 'all-books',
+      name: 'all-books',
+      component: AllBooks,
+      meta: { title: 'all-books' }
     }]
   },
-
   {
-    path: '/example',
+    path: '/borrowed-books',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: '',
+        name: 'borrowed-books',
+        component: BorrowedBooks,
+        meta: { title: 'borrowed-books' }
       }
     ]
   },
-
   {
-    path: '/form',
+    path: '/users',
     component: Layout,
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        path: '',
+        name: 'users',
+        component: BorrowedBooks,
+        meta: { title: 'users' }
       }
     ]
   }
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
 
 const router = createRouter()
 
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+
 export function resetRouter() {
   const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+  router.matcher = newRouter.matcher
 }
 
 export default router
